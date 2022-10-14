@@ -5,16 +5,17 @@ s = SenseHat()
 
 
 # This function will return specific color according to temprature
-def displayColorForTemperature(temp):
+def displayColorForTemperature(t):
+    temp = round(t)
     if -40 <= temp <= -10:
         return (0, 0, 155)
     elif -9 <= temp <= 0:
         return (0, 0, 255)
     elif 1 <= temp <= 15:
         return (144,238,144)
-    elif 16 <= temp < 22:
+    elif 16 <= temp <= 22:
         return (0, 255, 0)
-    elif temp >= 22:
+    elif temp >= 23:
         return (255, 0, 0)
 
 
@@ -36,13 +37,28 @@ def LedsOnForHumidity(hum,temp):
         i += 1
 
 choice = 1
+O = (0,0,0)
+off = [
+    O, O, O, O, O, O, O, O,
+    O, O, O, O, O, O, O, O,
+    O, O, O, O, O, O, O, O,
+    O, O, O, O, O, O, O, O,
+    O, O, O, O, O, O, O, O,
+    O, O, O, O, O, O, O, O,
+    O, O, O, O, O, O, O, O,
+    O, O, O, O, O, O, O, O,
+    ]
+
+
 
 while(choice!=0):
+    # In the begining turn off all the lights
+    s.set_pixels(off)
     try:
-        temp = int(input("Please enter temprature between -40 to 22."))
+        temp = float(input("Please enter temprature between -40 to 50."))
         hum = int(input("Please enter humidity between 0 to 100."))
 
-        if((temp<-41 or temp>23) or (hum<0 or hum>100) ):
+        if((temp<-41 or temp>50) or (hum<0 or hum>100) ):
             print("Please enter values within provides range")
         else:
             LedsOnForHumidity(hum,temp)
